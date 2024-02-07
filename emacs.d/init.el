@@ -1,80 +1,156 @@
-;; Emacs Initialization
+;;
+;; Package Management
+;; 
 
-;; Add package sources
 (require 'package)
-(add-to-list 'package-archives '("melpa"  . "https://melpa.org/packages/") t)
-(add-to-list 'package-archives '("nongnu" . "https://elpa.nongnu.org/nongnu/") t)
-(package-initialize)
 
-;; UTF-8
-(prefer-coding-system 'utf-8)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 
-;; Starting up
-(setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
-(setq make-backup-files nil)
-(setq create-lockfiles nil)
-
-(setq savehist-file "~/.emacs.d/history")
-(savehist-mode -1)
-
-(setq custom-file "~/.emacs.d/custom.el")
-(load custom-file t)
-
+;;
 ;; Appearance
+;;
 
-;; Disable the menu bar
-(menu-bar-mode -1)
+;; Menu bar: on/off?
+(menu-bar-mode 1)
 
-;; Disable the tool bar
+;; Scroll bar: on/off?
+(scroll-bar-mode -1)
+
+;; Tool bar: on/off?
 (tool-bar-mode -1)
 
-;; Disable the scroll bars
-(scroll-bar-mode -1)
+;; Tooltips: on/off?
+(tooltip-mode -1)
+
+;; Highlight current line: on/off?
+(global-hl-line-mode 1)
+
+;; Startup screen: on/off?
+(setq inhibit-startup-screen t)
+
+;;
+;; Fonts
+;;
+
+;; Set default font face
+(add-to-list 'default-frame-alist '(font . "PragmataPro Mono Liga-14"))
+
+;;
+;; Theme
+;;
 
 ;; Load a custom theme
 (load-theme 'modus-vivendi t)
 
-;; Set default font face
-;; (set-face-attribute 'default nil :font "PragmataPro Mono Liga-14")
-(add-to-list 'default-frame-alist '(font . "PragmataPro Mono Liga-14"))
+;;
+;; Modeline
+;;
 
-;; Highlight current line
-(global-hl-line-mode 1)
+;; Show column number along with line number in modeline
+(column-number-mode 1)
+
+;;
+;; Minibuffer
+;;
+
+;; Change all yes/no style questions to y/n style
+(fset 'yes-or-no-p 'y-or-n-p)
+
+;; Where to save the minibuffer history?
+(setq savehist-file "~/.emacs.d/history")
+
+;; Delete duplicates from the command history
+(setq history-delete-duplicates t)
+
+;; Save minibuffer history between Emacs sessions?
+(savehist-mode -1)
+
+;;
+;; Backup
+;;
+
+;; Where to save the backups?
+(setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+
+;; No backup
+(setq make-backup-files nil)
+
+;;
+;; Lockfiles
+;;
+
+;; Let Emacs keep track of files currently visited?
+(setq create-lockfiles nil)
+
+;;
+;; Autosave
+;;
+
+(setq auto-save-default nil
+      auto-save-interval 0)
+
+;;
+;; Custom File
+;;
+
+;; Where to save the custom file?
+(setq custom-file "~/.emacs.d/custom.el")
+
+;; Load it!
+(load custom-file t)
+
+;;
+;; Completion
+;;
+
+;; Enable Vertico
+(use-package vertico :init (vertico-mode))
+
+;;
+;; General Editing
+;;
+
+;; UTF-8
+(prefer-coding-system 'utf-8)
+
+;; Set desired line length in characters
+(setq-default fill-column 80)
+
+;; Don't use tabs but spaces
+(setq-default indent-tabs-mode nil)
+
+;; Set display width for tab characters
+(setq-default tab-width 2)
+
+;; Save always with a final new line
+(setq require-final-newline t)
 
 ;; Automatically pair parentheses
 (electric-pair-mode 1)
 
-;; Change "yes or no" to "y or n"
-(fset 'yes-or-no-p 'y-or-n-p)
-
-;; Turn off welcome screen
-(setq inhibit-startup-screen t)
-
-;; Middle-clicking pastes at the current location.
-(setq mouse-yank-at-point t)
-
-;; Show line and column in the mode-line
-(line-number-mode 1)
-(column-number-mode 1)
-
-;; Completion
-
-;; Enable vertico
-(use-package vertico :init (vertico-mode))
-
+;;
 ;; Web Development
+;;
 
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.css?\\'"  . web-mode))
 
-;; HTML element offset indentation 
+;; HTML element offset indentation
 (setq web-mode-markup-indent-offset 2)
 
 ;; CSS offset indentation 
 (setq web-mode-css-indent-offset 2)
 
-;; Tab width of 2 is compact and readable
-;; (setq-default css-indent-offset 2) 
+;;
+;; Keymaps
+;;
+
+;; Middle-clicking pastes at the current location.
+(setq mouse-yank-at-point t)
+
+(global-set-key [f1] 'previous-buffer)
+(global-set-key [f2] 'next-buffer)
+
 
 
 
