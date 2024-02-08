@@ -11,7 +11,7 @@
 ;;
 
 ;; Menu bar: on/off?
-(menu-bar-mode 1)
+(menu-bar-mode -1)
 
 ;; Scroll bar: on/off?
 (scroll-bar-mode -1)
@@ -43,6 +43,16 @@
 (load-theme 'modus-vivendi t)
 
 ;;
+;; Cursor
+;;
+
+;; Turn on/off cursor blinking?
+(blink-cursor-mode -1)
+
+;; Cursor blinking interval in seconds
+(setq blink-cursor-interval 0.4)
+
+;;
 ;; Modeline
 ;;
 
@@ -52,6 +62,9 @@
 ;;
 ;; Minibuffer
 ;;
+
+;; Use the minibuffer instead of dialog boxes
+(setq use-dialog-box nil)
 
 ;; Change all yes/no style questions to y/n style
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -86,8 +99,16 @@
 ;; Autosave
 ;;
 
-(setq auto-save-default nil
-      auto-save-interval 0)
+(setq auto-save-default nil)
+(setq auto-save-interval 0)
+
+;;
+;; Window Mnagement
+;;
+
+;; Focus follows mouse?
+(setq mouse-autoselect-window t)
+(setq focus-follows-mouse t)
 
 ;;
 ;; Custom File
@@ -98,13 +119,6 @@
 
 ;; Load it!
 (load custom-file t)
-
-;;
-;; Completion
-;;
-
-;; Enable Vertico
-(use-package vertico :init (vertico-mode))
 
 ;;
 ;; General Editing
@@ -127,6 +141,13 @@
 
 ;; Automatically pair parentheses
 (electric-pair-mode 1)
+
+;;
+;; Completion
+;;
+
+;; Enable Vertico
+(use-package vertico :init (vertico-mode))
 
 ;;
 ;; Web Development
