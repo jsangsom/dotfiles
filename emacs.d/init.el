@@ -28,6 +28,9 @@
 ;; Startup screen: on/off?
 (setq inhibit-startup-screen t)
 
+;; Alarms: turn off?
+(setq ring-bell-function 'ignore)
+
 ;;
 ;; Fonts
 ;;
@@ -63,11 +66,11 @@
 ;; Minibuffer
 ;;
 
-;; Use the minibuffer instead of dialog boxes
-(setq use-dialog-box nil)
-
 ;; Change all yes/no style questions to y/n style
 (fset 'yes-or-no-p 'y-or-n-p)
+
+;; Use the minibuffer instead of dialog boxes
+(setq use-dialog-box nil)
 
 ;; Where to save the minibuffer history?
 (setq savehist-file "~/.emacs.d/history")
@@ -77,6 +80,22 @@
 
 ;; Save minibuffer history between Emacs sessions?
 (savehist-mode -1)
+
+;;
+;; Ibuffer
+;;
+
+(require 'ibuf-ext)
+
+;; Auto refresh buffers list
+(add-hook 'ibuffer-mode-hook
+          (lambda ()
+            (ibuffer-auto-mode 1)))
+
+;; Hide all buffers starting with an asterisk
+(add-to-list 'ibuffer-never-show-predicates "^\\*")
+
+(global-set-key (kbd "C-x C-b") 'ibuffer)
 
 ;;
 ;; Backup
@@ -99,16 +118,16 @@
 ;; Autosave
 ;;
 
-(setq auto-save-default nil)
-(setq auto-save-interval 0)
+(setq auto-save-default nil
+      auto-save-interval 0)
 
 ;;
 ;; Window Mnagement
 ;;
 
 ;; Focus follows mouse?
-(setq mouse-autoselect-window t)
-(setq focus-follows-mouse t)
+(setq mouse-autoselect-window t
+      focus-follows-mouse t)
 
 ;;
 ;; Custom File
@@ -139,8 +158,15 @@
 ;; Save always with a final new line
 (setq require-final-newline t)
 
+;;
+;; Parentheses, Brackets and Braces
+;;
+
 ;; Automatically pair parentheses
 (electric-pair-mode 1)
+
+;; Start the mode automatically in most programming modes
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 
 ;;
 ;; Completion
@@ -172,6 +198,8 @@
 (global-set-key [f1] 'previous-buffer)
 (global-set-key [f2] 'next-buffer)
 
+;; Kill the current buffer immediately instead of presenting a selection
+(global-set-key (kbd "C-x k") #'kill-current-buffer)
 
 
 
