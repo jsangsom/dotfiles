@@ -1,26 +1,30 @@
 ;;
-;; Package Management
-;; 
+;; PACKAGE MANAGEMENT
+;;
 
 (require 'package)
 
+;; 1st priority
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 
 ;;
-;; Appearance
+;; USER INTERFACE
 ;;
 
 ;; Menu bar: on/off?
 (menu-bar-mode -1)
 
-;; Scroll bar: on/off?
-(scroll-bar-mode -1)
-
 ;; Tool bar: on/off?
 (tool-bar-mode -1)
 
+;; Scroll bar: on/off?
+(scroll-bar-mode -1)
+
 ;; Tooltips: on/off?
 (tooltip-mode -1)
+
+;; Cursor blinking: on/off?
+(blink-cursor-mode -1)
 
 ;; Highlight current line: on/off?
 (global-hl-line-mode 1)
@@ -28,61 +32,57 @@
 ;; Startup screen: on/off?
 (setq inhibit-startup-screen t)
 
-;; Alarms: turn off?
+;; Alarms: on/off?
 (setq ring-bell-function 'ignore)
 
 ;;
-;; Fonts
+;; MODELINE
 ;;
 
-;; Set default font face
-(add-to-list 'default-frame-alist '(font . "PragmataPro Mono Liga-14"))
-
-;;
-;; Theme
-;;
-
-;; Load a custom theme
-(load-theme 'modus-vivendi t)
-
-;;
-;; Cursor
-;;
-
-;; Turn on/off cursor blinking?
-(blink-cursor-mode -1)
-
-;; Cursor blinking interval in seconds
-(setq blink-cursor-interval 0.4)
-
-;;
-;; Modeline
-;;
-
-;; Show column number along with line number in modeline
+;; Show column number: on/off?
 (column-number-mode 1)
 
+;; Show the buffer size: on/off?
+(size-indication-mode -1)
+
 ;;
-;; Minibuffer
+;; MINIBUFFER
 ;;
 
-;; Change all yes/no style questions to y/n style
-(fset 'yes-or-no-p 'y-or-n-p)
-
-;; Use the minibuffer instead of dialog boxes
-(setq use-dialog-box nil)
-
-;; Where to save the minibuffer history?
-(setq savehist-file "~/.emacs.d/history")
+;; Save history between sessions: on/off?
+(savehist-mode -1)
 
 ;; Delete duplicates from the command history
 (setq history-delete-duplicates t)
 
-;; Save minibuffer history between Emacs sessions?
-(savehist-mode -1)
+;; Where to save the minibuffer history?
+(setq savehist-file "~/.emacs.d/history")
+
+;; Use the minibuffer instead of dialog boxes
+(setq use-dialog-box nil)
+
+;; Change all yes/no style questions to y/n style
+(fset 'yes-or-no-p 'y-or-n-p)
 
 ;;
-;; Ibuffer
+;; MINIBUFFER COMPLETION
+;;
+
+;; Enable Vertico
+(use-package vertico :init (vertico-mode))
+
+;;
+;; BUFFERS
+;;
+
+(global-set-key [f1] 'previous-buffer)
+(global-set-key [f2] 'next-buffer)
+
+;; Kill the current buffer immediately
+(global-set-key (kbd "C-x k") #'kill-current-buffer)
+
+;;
+;; IBUFFER
 ;;
 
 (require 'ibuf-ext)
@@ -98,7 +98,22 @@
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
 ;;
-;; Backup
+;; WINDOW MANAGEMENT
+;;
+
+;; Focus follows mouse?
+(setq mouse-autoselect-window t
+      focus-follows-mouse t)
+
+;;
+;; CLIPBOARD, COPY & PASTE
+;;
+
+;; Mouse yank commands yank at point instead of at click
+(setq mouse-yank-at-point t)
+
+;;
+;; BACKUP
 ;;
 
 ;; Where to save the backups?
@@ -108,39 +123,44 @@
 (setq make-backup-files nil)
 
 ;;
-;; Lockfiles
+;; LOCKFILES
 ;;
 
 ;; Let Emacs keep track of files currently visited?
 (setq create-lockfiles nil)
 
 ;;
-;; Autosave
+;; AUTOSAVE
 ;;
 
 (setq auto-save-default nil
       auto-save-interval 0)
 
 ;;
-;; Window Mnagement
+;; APPAREANCE
 ;;
 
-;; Focus follows mouse?
-(setq mouse-autoselect-window t
-      focus-follows-mouse t)
+;; Load a custom theme
+(load-theme 'modus-vivendi t)
 
 ;;
-;; Custom File
+;; FONTS
+;;
+
+;; Set default font face
+(add-to-list 'default-frame-alist '(font . "PragmataPro Mono Liga-14"))
+
+;;
+;; CUSTOM FILE
 ;;
 
 ;; Where to save the custom file?
 (setq custom-file "~/.emacs.d/custom.el")
 
-;; Load it!
 (load custom-file t)
 
 ;;
-;; General Editing
+;; GENERAL EDITING
 ;;
 
 ;; UTF-8
@@ -149,17 +169,11 @@
 ;; Set desired line length in characters
 (setq-default fill-column 80)
 
-;; Don't use tabs but spaces
-(setq-default indent-tabs-mode nil)
-
-;; Set display width for tab characters
-(setq-default tab-width 2)
-
 ;; Save always with a final new line
 (setq require-final-newline t)
 
 ;;
-;; Parentheses, Brackets and Braces
+;; BRACKETS / PARENTHESIS
 ;;
 
 ;; Automatically pair parentheses
@@ -169,14 +183,15 @@
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 
 ;;
-;; Completion
+;; INDENTATION
 ;;
 
-;; Enable Vertico
-(use-package vertico :init (vertico-mode))
+;; Don't use tabs but spaces
+(setq-default indent-tabs-mode nil
+              tab-width 2) 
 
 ;;
-;; Web Development
+;; WEB DEVELOPEMENT
 ;;
 
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
@@ -188,18 +203,6 @@
 ;; CSS offset indentation 
 (setq web-mode-css-indent-offset 2)
 
-;;
-;; Keymaps
-;;
-
-;; Middle-clicking pastes at the current location.
-(setq mouse-yank-at-point t)
-
-(global-set-key [f1] 'previous-buffer)
-(global-set-key [f2] 'next-buffer)
-
-;; Kill the current buffer immediately instead of presenting a selection
-(global-set-key (kbd "C-x k") #'kill-current-buffer)
 
 
 
