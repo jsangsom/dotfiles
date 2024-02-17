@@ -1,5 +1,5 @@
 #
-# Environment
+# ENVIRONMENT
 #
 
 umask 022
@@ -38,7 +38,7 @@ path=(
 fpath=(${ASDF_DIR}/completions $fpath)
 
 #
-# Aliases
+# ALIASES
 #
 
 alias ls='ls -F --color=auto --group-directories-first'
@@ -62,7 +62,7 @@ alias -g L='| less'
 alias -g N='| wc -l'
 
 #
-# Zsh Options
+# OPTIONS
 #
 
 setopt AUTO_CD
@@ -93,7 +93,7 @@ unsetopt HUP
 unsetopt CHECK_JOBS
 
 #
-# Completions
+# COMPLETIONS
 #
 
 autoload -Uz compinit && compinit
@@ -113,7 +113,7 @@ zstyle ':completion:*:mv:*' ignore-line yes
 zstyle ':completion:*:cp:*' ignore-line yes
 
 #
-# Key Bindings
+# KEY BINDINGS
 #
 
 bindkey -e
@@ -132,7 +132,7 @@ bindkey '^[[Z'  reverse-menu-complete
 bindkey '^?'    backward-delete-char
 
 #
-# Prompt
+# PROMPT
 #
 
 PROMPT='%F{magenta}%B> %F{blue}%~%b%f %# '
