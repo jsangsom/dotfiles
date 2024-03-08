@@ -6,4 +6,4 @@
 :verbose:        true
 :sources:
   - http://rubygems.org/
-gem: --no-rdoc --no-ri
+gem: --no-document
