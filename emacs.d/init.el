@@ -35,6 +35,11 @@
 ;; Alarms: on/off?
 (setq ring-bell-function 'ignore)
 
+;; Avoid Accidentally Minimizing Emacs
+(when (display-graphic-p)
+  (global-unset-key (kbd "C-z"))
+  (global-unset-key (kbd "C-x C-z")))
+
 ;;
 ;; MODELINE
 ;;
@@ -133,6 +138,7 @@
 ;; AUTOSAVE
 ;;
 
+;; No auto-save
 (setq auto-save-default nil
       auto-save-interval 0)
 
